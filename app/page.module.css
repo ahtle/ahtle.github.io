@@ -9,3 +9,18 @@
   background-position: center;
   image-rendering: pixelated;
 }
+
+.SectionTwo {
+  background-color: #1a1514;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.colorGradient {
+  background: linear-gradient(90deg, #f7324d, #a23f3f, #f5fb72, #fd6900);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
