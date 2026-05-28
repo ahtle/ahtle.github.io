@@ -24,3 +24,61 @@
   background-clip: text;
   -webkit-text-fill-color: transparent;
 }
+
+.sectionThree {
+  background: linear-gradient(180deg, #1a1514, #413561);
+}
+
+.sectionThreeContent {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  align-items: start;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.characterBioContainer {
+  color: #fff;
+  text-align: left;
+}
+
+.characterBioContainer p {
+  margin: 5px 0;
+}
+
+.characterBioContainer i {
+  font-size: 0.8em;
+}
+
+.primaryColor {
+  color: #ff6212;
+}
+
+.imgBorder {
+  float: left;
+  margin-right: 20px;
+  border: 5px solid #fff;
+  box-shadow: 10px 10px 0 rgba(0, 0, 0, 0.75);
+}
+
+.imgBorder img {
+  display: block;
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+}
+
+@media screen and (max-width: 575px) {
+  .sectionThreeContent {
+    grid-template-columns: 1fr;
+  }
+
+  .imgBorder {
+    float: none;
+    display: flex;
+    justify-content: center;
+    margin-right: 0;
+    margin-bottom: 20px;
+  }
+}

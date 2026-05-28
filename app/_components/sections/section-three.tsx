@@ -1,78 +1,101 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { faMousePointer } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Image from "next/image";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+
+import { useDecodeText } from "@/app/_hooks/use-decode-text";
+import RadarChart from "../chart/radar-chart";
+import styles from "../../page.module.css";
+
+const LABELS = ["Python / Django", "Databases", "AI / Cursor", "PHP", "JS/Vue"];
+const INITIAL_DATA = [0, 0, 0, 0, 0];
+const FINAL_DATA = [7, 5, 4, 6, 9];
+const HEADER_FINAL = "CHOOSE YOUR CODER";
 
 export default function SectionThree() {
-  const [header, setHeader] = useState("C$@SDV :}vC )#LF");
+  const { text: header, startDecode } = useDecodeText(HEADER_FINAL);
   const [isUpdateChart, setIsUpdateChart] = useState(false);
-  const isDecodingRef = useRef(false);
+  const [isMouseOver, setIsMouseOver] = useState(false);
+  const hasTriggeredRef = useRef(false);
 
-  const decodeHeader = useCallback(() => {
-    if (isDecodingRef.current || isUpdateChart) return;
-    isDecodingRef.current = true;
-    setTimeout(() => {
-      setHeader("CH+4Zh QV>< *HNQ$");
-    }, 100);
-    setTimeout(() => {
-      setHeader("CHO4ne 8cse as39%");
-    }, 200);
-    setTimeout(() => {
-      setHeader("CHOO]Z MBI? !9%c3");
-    }, 300);
-    setTimeout(() => {
-      setHeader("CHOOSh 6ol zz4my");
-    }, 400);
-    setTimeout(() => {
-      setHeader("CHOOSE vlo6 &2sdo");
-    }, 500);
-    setTimeout(() => {
-      setHeader("CHOOSE Y=7+ GC3t1");
-    }, 600);
-    setTimeout(() => {
-      setHeader("CHOOSE YO11 &0ytn");
-    }, 700);
-    setTimeout(() => {
-      setHeader("CHOOSE YOUh .39~h");
-    }, 800);
-    setTimeout(() => {
-      setHeader("CHOOSE YOUR mvz|g3");
-    }, 900);
-    setTimeout(() => {
-      setHeader("CHOOSE YOUR C2sdo");
-    }, 1000);
-    setTimeout(() => {
-      setHeader("CHOOSE YOUR COv4$");
-    }, 1100);
-    setTimeout(() => {
-      setHeader("CHOOSE YOUR CODk2");
-    }, 1200);
-    setTimeout(() => {
-      setHeader("CHOOSE YOUR CODE/");
-    }, 1300);
-    setTimeout(() => {
-      setHeader("CHOOSE YOUR CODER");
-      setIsUpdateChart(true);
-      isDecodingRef.current = false;
-    }, 1400);
-  }, [isUpdateChart]);
+  const triggerSection = useCallback(() => {
+    if (hasTriggeredRef.current) return;
+    hasTriggeredRef.current = true;
+    startDecode();
+    setIsUpdateChart(true);
+  }, [startDecode]);
 
   useEffect(() => {
     const onScroll = (): void => {
       const element = document.getElementById("section-three");
       if (!element) return;
       const rect = element.getBoundingClientRect();
-      if (rect.top <= 800) {
-        decodeHeader();
+      if (rect.top <= 800 && !hasTriggeredRef.current) {
+        triggerSection();
       }
     };
 
+    onScroll();
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
-  }, [decodeHeader]);
+  }, [triggerSection]);
+
+  const radarDataset = useMemo(
+    () => [
+      {
+        backgroundColor: "rgba(255, 0, 0, 0.5)",
+        borderColor: "#FC2525",
+        pointBackgroundColor: "white",
+        data: isUpdateChart ? FINAL_DATA : INITIAL_DATA,
+      },
+    ],
+    [isUpdateChart],
+  );
 
   return (
-    <section id="section-three" className="section-container">
+    <section
+      id="section-three"
+      className={`section-container ${styles.sectionThree}`}
+    >
       <h3 className="section-header">{header}</h3>
+
+      <div className={styles.sectionThreeContent}>
+        <div className={styles.characterBioContainer}>
+          <div
+            className={styles.imgBorder}
+            onMouseEnter={() => setIsMouseOver(true)}
+            onMouseLeave={() => setIsMouseOver(false)}
+          >
+            <Image
+              src={isMouseOver ? "/images/dino-2.png" : "/images/dino-1.png"}
+              alt="House banner"
+              width={200}
+              height={200}
+              priority={false}
+            />
+          </div>
+          <span className={styles.primaryColor}>Anh</span> of house{" "}
+          <span className={styles.primaryColor}>Le</span>, first of his name,
+          maester of nap and watcher of sports, cleaner of code, user of Google
+          searches, browser of youtube.
+          <p>
+            <span className={styles.primaryColor}>House banner:</span> The mouse{" "}
+            <FontAwesomeIcon icon={faMousePointer} className="text-[1.25rem]" />
+          </p>
+          <p>
+            <span className={styles.primaryColor}>House word:</span> deadlines
+            are coming
+          </p>
+        </div>
+
+        <RadarChart
+          labels={LABELS}
+          datasets={radarDataset}
+          update={isUpdateChart}
+        />
+      </div>
     </section>
   );
 }
