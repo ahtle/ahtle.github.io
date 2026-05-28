@@ -29,7 +29,12 @@ body {
   text-transform: uppercase;
 }
 
-@utility section-container {
-  min-height: 300px;
-  padding: 20px;
+@layer components {
+  .section-container {
+    @apply min-h-[18.75rem] p-8;
+  }
+  .section-header {
+    @apply mb-[4rem] text-[2rem] text-[#ff6212];
+    text-shadow: 5px 5px #522e00;
+  }
 }
