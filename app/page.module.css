@@ -28,6 +28,9 @@
 .sectionThree {
   background: linear-gradient(180deg, #1a1514, #413561);
 }
+.sectionFour {
+  background: linear-gradient(180deg, #413561, #3206b9);
+}
 
 .sectionThreeContent {
   display: grid;

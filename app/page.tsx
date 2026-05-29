@@ -1,6 +1,7 @@
 import SectionOne from "./_components/sections/section-one";
 import SectionTwo from "./_components/sections/section-two";
 import SectionThree from "./_components/sections/section-three";
+import SectionFour from "./_components/sections/section-four";
 
 export default function Home() {
   return (
@@ -11,6 +12,7 @@ export default function Home() {
 
         <SectionTwo />
         <SectionThree />
+        <SectionFour />
       </main>
     </div>
   );

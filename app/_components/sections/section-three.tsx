@@ -81,8 +81,14 @@ export default function SectionThree() {
           maester of nap and watcher of sports, cleaner of code, user of Google
           searches, browser of youtube.
           <p>
-            <span className={styles.primaryColor}>House banner:</span> The mouse{" "}
-            <FontAwesomeIcon icon={faMousePointer} className="text-[1.25rem]" />
+            <span className={styles.primaryColor}>
+              House banner: The mouse{" "}
+            </span>
+            <FontAwesomeIcon
+              icon={faMousePointer}
+              className="inline-block"
+              style={{ width: 20, height: 20 }}
+            />
           </p>
           <p>
             <span className={styles.primaryColor}>House word:</span> deadlines
