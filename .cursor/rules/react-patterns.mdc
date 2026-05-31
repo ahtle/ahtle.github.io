@@ -10,6 +10,8 @@ alwaysApply: false
 
 - Default export function components with PascalCase filenames.
 - Props as `interface XProps { ... }` by default.
+- Keep components under 250 lines when possible.
+- Extract reusable logic into custom hooks.
 
 ```tsx
 // ✅ GOOD
@@ -26,6 +28,7 @@ export default function StageCard({ title, isActive }: StageCardProps) {
 ## Client Boundary
 
 Add `"use client"` only when the component uses:
+
 - React hooks (`useState`, `useEffect`, `useRef`, etc.)
 - Browser APIs (`document`, `window`, scroll listeners)
 - Client-only libraries (Chart.js, interactive Font Awesome)

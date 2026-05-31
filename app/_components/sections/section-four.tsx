@@ -3,68 +3,21 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 
 import styles from "@/app/page.module.css";
-import StageList, {
-  type StageListItem,
-} from "@/app/_components/stage/stage-list";
+import {
+  STAGE_DETAILS,
+  STAGE_ENUMS,
+  STAGE_ITEMS,
+  type Stage,
+} from "@/app/_components/stage/stage-constants";
+import StageDisplay from "@/app/_components/stage/stage-display";
+import StageList from "@/app/_components/stage/stage-list";
 import { useDecodeText } from "@/hooks/use-decode-text";
-import BDBwPng from "@/public/images/bd-bw.png";
-import BDPng from "@/public/images/bd.png";
-import SJSUBwPng from "@/public/images/sjsu-bw.png";
-import SJSUPng from "@/public/images/sjsu.png";
-import SparkBwPng from "@/public/images/spark-bw.png";
-import SparkPng from "@/public/images/spark.png";
-import StanfordBwPng from "@/public/images/stanford-bw.png";
-import StanfordPng from "@/public/images/stanford.png";
-import ThinkfulBwPng from "@/public/images/thinkful-bw.png";
-import ThinkfulPng from "@/public/images/thinkful.png";
 
 const HEADER_FINAL = "CHOOSE YOUR STAGE";
 
-const STAGES = {
-  SPARK: "SPARK",
-  STANFORD: "STANFORD",
-  BD: "BD",
-  THINKFUL: "THINKFUL",
-  SJSU: "SJSU",
-} as const;
-type Stage = (typeof STAGES)[keyof typeof STAGES]; // "SPARK" | "STANFORD"
-
-const STAGE_ITEMS: StageListItem<Stage>[] = [
-  {
-    id: STAGES.SPARK,
-    colorImage: SparkPng,
-    bwImage: SparkBwPng,
-    alt: "Spark",
-  },
-  {
-    id: STAGES.STANFORD,
-    colorImage: StanfordPng,
-    bwImage: StanfordBwPng,
-    alt: "Stanford",
-  },
-  {
-    id: STAGES.BD,
-    colorImage: BDPng,
-    bwImage: BDBwPng,
-    alt: "Becton Dickenson Biosciences",
-  },
-  {
-    id: STAGES.THINKFUL,
-    colorImage: ThinkfulPng,
-    bwImage: ThinkfulBwPng,
-    alt: "Thinkful",
-  },
-  {
-    id: STAGES.SJSU,
-    colorImage: SJSUPng,
-    bwImage: SJSUBwPng,
-    alt: "San Jose State University",
-  },
-];
-
 export default function SectionFour() {
   const { text: header, startDecode } = useDecodeText(HEADER_FINAL);
-  const [stage, setStage] = useState<Stage>(STAGES.SPARK);
+  const [stage, setStage] = useState<Stage>(STAGE_ENUMS.SPARK);
   const hasTriggeredRef = useRef(false);
 
   const triggerSection = useCallback(() => {
@@ -96,7 +49,7 @@ export default function SectionFour() {
       <h3 className="section-header">{header}</h3>
       <div className="grid gap-4 md:grid-cols-2 md:gap-8">
         <StageList items={STAGE_ITEMS} selectedId={stage} onSelect={setStage} />
-        <div>2</div>
+        <StageDisplay detail={STAGE_DETAILS[stage]} />
       </div>
     </section>
   );
