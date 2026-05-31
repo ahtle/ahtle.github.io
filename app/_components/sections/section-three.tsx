@@ -3,11 +3,11 @@
 import { faMousePointer } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 
 import styles from "@/app/page.module.css";
 import RadarChart from "@/components/chart/radar-chart";
-import { useDecodeText } from "@/hooks/use-decode-text";
+import SectionHeader from "../section-header";
 
 const LABELS = ["Python / Django", "Databases", "AI / Cursor", "PHP", "JS/Vue"];
 const INITIAL_DATA = [0, 0, 0, 0, 0];
@@ -15,32 +15,12 @@ const FINAL_DATA = [7, 5, 4, 6, 9];
 const HEADER_FINAL = "CHOOSE YOUR CODER";
 
 export default function SectionThree() {
-  const { text: header, startDecode } = useDecodeText(HEADER_FINAL);
   const [isUpdateChart, setIsUpdateChart] = useState(false);
   const [isMouseOver, setIsMouseOver] = useState(false);
-  const hasTriggeredRef = useRef(false);
 
-  const triggerSection = useCallback(() => {
-    if (hasTriggeredRef.current) return;
-    hasTriggeredRef.current = true;
-    startDecode();
+  const handleHeaderTriggered = useCallback(() => {
     setIsUpdateChart(true);
-  }, [startDecode]);
-
-  useEffect(() => {
-    const onScroll = (): void => {
-      const element = document.getElementById("section-three");
-      if (!element) return;
-      const rect = element.getBoundingClientRect();
-      if (rect.top <= 800 && !hasTriggeredRef.current) {
-        triggerSection();
-      }
-    };
-
-    onScroll();
-    window.addEventListener("scroll", onScroll);
-    return () => window.removeEventListener("scroll", onScroll);
-  }, [triggerSection]);
+  }, []);
 
   const radarDataset = useMemo(
     () => [
@@ -59,7 +39,11 @@ export default function SectionThree() {
       id="section-three"
       className={`section-container ${styles.sectionThree}`}
     >
-      <h3 className="section-header">{header}</h3>
+      <SectionHeader
+        sectionId="section-three"
+        text={HEADER_FINAL}
+        onTriggered={handleHeaderTriggered}
+      />
 
       <div className={styles.sectionThreeContent}>
         <div className={styles.characterBioContainer}>
