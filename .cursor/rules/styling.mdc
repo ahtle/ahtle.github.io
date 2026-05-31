@@ -1,0 +1,41 @@
+---
+description: Styling conventions — Tailwind v4, CSS Modules, globals
+globs: **/*.{css,module.css}
+alwaysApply: false
+---
+
+# Styling
+
+## Hybrid Approach
+
+This project combines three layers:
+
+1. **Tailwind v4 utilities** — layout, spacing, responsive (`className="md:grid-cols-2 h-[300px]"`)
+2. **CSS Modules** — section-specific theming (`page.module.css`, `stage.module.css`)
+3. **Global component classes** — `@layer components` in `globals.css` (`.section-container`, `.section-header`)
+
+## Combining Classes
+
+```tsx
+// ✅ GOOD — module class + global Tailwind component class
+<div className={`${styles.sectionThree} section-container`}>
+```
+
+## When to Use What
+
+| Need | Use |
+|------|-----|
+| Layout, spacing, responsive | Tailwind utilities in JSX |
+| Section theme, complex selectors | CSS Module in `page.module.css` |
+| Reusable cross-section classes | `@layer components` in `globals.css` |
+| Component-specific styles | Co-located `*.module.css` (e.g. `stage.module.css`) |
+
+## Tailwind v4
+
+- Configured via `@import "tailwindcss"` in `globals.css` and PostCSS plugin.
+- No separate `tailwind.config.js` — do not create one.
+- Prettier sorts classes via `prettier-plugin-tailwindcss`.
+
+## Theme
+
+CSS variables in `:root` and `@theme inline` in `globals.css`. Dark mode via `prefers-color-scheme`.

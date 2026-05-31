@@ -1,0 +1,33 @@
+---
+description: Core project standards — scope, security, quality, git
+alwaysApply: true
+---
+
+# Core Standards
+
+## Scope
+
+- Minimize diff scope. Solve the requested task only.
+- Do not refactor unrelated code or add unrequested abstractions.
+- Read neighboring files and match existing patterns before inventing new ones.
+
+## Security
+
+- Never commit `.env`, credentials, API keys, or secrets.
+- Do not log sensitive data.
+
+## Quality
+
+- Run `npm run lint` after substantive code changes.
+- Format with Prettier (`npm run format`) when touching many files.
+- No test framework exists — do not add Jest, Vitest, or Playwright without approval.
+
+## Git
+
+- Do not create commits unless the user explicitly asks.
+- Do not push to remote unless explicitly asked.
+
+## Dependencies
+
+- Do not add new npm packages unless required for the task.
+- Prefer existing stack: Next.js, React, Tailwind v4, Chart.js.

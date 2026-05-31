@@ -7,6 +7,11 @@ export type DecodeTextOptions = {
   onComplete?: () => void;
 };
 
+/**
+ * Returns decode frame count for final text.
+ * @param finalText `"hello"`
+ * @returns `5`
+ */
 export function getDecodeFrameCount(finalText: string): number {
   return Math.max(finalText.length, 1);
 }
@@ -16,11 +21,9 @@ function pickScrambleChar(seed: number): string {
 }
 
 /**
- * Given a final text, return a scrambled version
- * e.g. "Final text" -> "avn@3 !$fc"
- *
- * @param finalText
- * @returns
+ * Scrambles text deterministically from input seed.
+ * @param finalText `"Final"`
+ * @returns `"avn@3"`
  */
 export function deterministicScrambleText(finalText: string): string {
   return [...finalText]
@@ -57,7 +60,10 @@ function generateDecodeFrames(finalText: string): string[] {
 }
 
 /**
- * Runs the decode animation. Returns a cancel function (clears pending timeouts).
+ * Plays decode frames via callback.
+ * @param finalText `"hi"`
+ * @param onFrame Called each frame with scrambled text
+ * @returns Cancel function, e.g. `() => void`
  */
 export function runDecodeAnimation(
   finalText: string,

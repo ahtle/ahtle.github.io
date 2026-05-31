@@ -1,6 +1,7 @@
 import Image from "next/image";
-import BannerImage from "../../../public/images/king-of-coder.png";
-import styles from "../../page.module.css";
+
+import styles from "@/app/page.module.css";
+import BannerImage from "@/public/images/king-of-coder.png";
 
 export default function SectionOne() {
   return (

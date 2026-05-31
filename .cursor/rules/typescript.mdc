@@ -1,0 +1,67 @@
+---
+description: TypeScript conventions for this project
+globs: **/*.{ts,tsx}
+alwaysApply: false
+---
+
+# TypeScript
+
+## Strict Mode
+
+Project uses `"strict": true`. Avoid `any`. Prefer explicit types on exported functions and props.
+
+## Config Constants
+
+Use `UPPER_SNAKE` objects with `as const` and derived union types:
+
+```tsx
+const STAGES = {
+  SPARK: "SPARK",
+  STANFORD: "STANFORD",
+} as const;
+type Stage = (typeof STAGES)[keyof typeof STAGES];
+```
+
+## Generics
+
+Use where the existing code does — e.g. `StageListItem<Stage>` in section-four.
+
+## Path Alias
+
+Import cross-folder code with `@/`:
+
+```tsx
+import { useDecodeText } from "@/hooks/use-decode-text";
+import { deterministicScrambleText } from "@/lib/decode-text";
+import StageList from "@/app/_components/stage/stage-list";
+```
+
+## Props Types
+
+Use `interface` for component props. Reserve `type` for unions, derived types, and other type-level utilities:
+
+```tsx
+// ✅ GOOD — props
+interface FooProps {
+  name: string;
+}
+
+// ✅ GOOD — derived union (type utility)
+const STAGES = { SPARK: "SPARK" } as const;
+type Stage = (typeof STAGES)[keyof typeof STAGES];
+```
+
+## Utility Function Docs
+
+Add a short docstring to exported functions in `lib/` and `hooks/`. Not required on React components.
+
+Up to 3 lines of description — aim for one. Include `@param` and `@returns` with examples:
+
+```ts
+/**
+ * Returns decode frame count for final text.
+ * @param finalText `"hello"`
+ * @returns `5`
+ */
+export function getDecodeFrameCount(finalText: string): number {
+```

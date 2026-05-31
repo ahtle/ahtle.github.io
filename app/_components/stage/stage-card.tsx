@@ -2,13 +2,13 @@ import Image, { type StaticImageData } from "next/image";
 
 import styles from "./stage.module.css";
 
-type StageCardProps = {
+interface StageCardProps {
   colorImage: StaticImageData;
   bwImage: StaticImageData;
   isSelected: boolean;
   alt: string;
   onSelect: () => void;
-};
+}
 
 export default function StageCard({
   colorImage,

@@ -25,11 +25,11 @@ ChartJS.register(
   Tooltip,
 );
 
-type RadarChartProps = {
+interface RadarChartProps {
   labels: string[];
   datasets: ChartDataset<"radar">[];
   update: boolean;
-};
+}
 
 export default function RadarChart({
   labels,

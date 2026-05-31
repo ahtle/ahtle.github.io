@@ -1,0 +1,44 @@
+---
+description: React component patterns for this project
+globs: **/*.tsx
+alwaysApply: false
+---
+
+# React Patterns
+
+## Components
+
+- Default export function components with PascalCase filenames.
+- Props as `interface XProps { ... }` by default.
+
+```tsx
+// ✅ GOOD
+interface StageCardProps {
+  title: string;
+  isActive: boolean;
+}
+
+export default function StageCard({ title, isActive }: StageCardProps) {
+  return <div>{title}</div>;
+}
+```
+
+## Client Boundary
+
+Add `"use client"` only when the component uses:
+- React hooks (`useState`, `useEffect`, `useRef`, etc.)
+- Browser APIs (`document`, `window`, scroll listeners)
+- Client-only libraries (Chart.js, interactive Font Awesome)
+
+Sections one and two are Server Components. Sections three and four are Client Components.
+
+## Logic Extraction
+
+- Reusable React hooks → `hooks/` (named exports, e.g. `useDecodeText`)
+- Pure non-React logic → `lib/` (e.g. `decode-text.ts`)
+- Page/route UI → `app/_components/` (e.g. `sections/`, `stage/`)
+- Shared reusable UI → `components/` (e.g. `chart/RadarChart`)
+
+## State
+
+- Local `useState` only. No global state libraries.

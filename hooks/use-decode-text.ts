@@ -3,13 +3,18 @@
 import {
   deterministicScrambleText,
   runDecodeAnimation,
-} from "@/utilities/decode-text";
+} from "@/lib/decode-text";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 type UseDecodeTextOptions = {
   initialText?: string;
 };
 
+/**
+ * Scramble/decode text state with `startDecode` trigger.
+ * @param finalText `"HELLO"`
+ * @returns `{ text, setText, startDecode }`
+ */
 export function useDecodeText(
   finalText: string,
   options?: UseDecodeTextOptions,

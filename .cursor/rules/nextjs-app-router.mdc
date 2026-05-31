@@ -1,0 +1,50 @@
+---
+description: Next.js App Router conventions for this project
+globs: app/**/*
+alwaysApply: false
+---
+
+# Next.js App Router
+
+## Version Warning
+
+Next.js 16 has breaking changes. Read `node_modules/next/dist/docs/` before writing Next.js code.
+
+## Structure
+
+- `app/` — routing, layouts, page-level CSS only
+- `app/page.tsx` — composes sections from `@/app/_components/`
+- `app/layout.tsx` — fonts (`next/font/google`), metadata, global CSS
+- `app/_components/` — page-specific UI (private folder, not routed)
+- Shared reusable UI → root `components/` (e.g. `chart/`)
+
+## Server vs Client
+
+Default to Server Components. Only add `"use client"` at the top of files that need client features.
+
+Current client components: `app/_components/sections/section-three.tsx`, `section-four.tsx`, `components/chart/radar-chart.tsx`, `hooks/use-decode-text.ts`.
+
+## Images
+
+Prefer `next/image`:
+
+```tsx
+import Image from "next/image";
+import SparkPng from "@/public/images/spark.png";
+
+<Image src={SparkPng} alt="Spark" />
+// or
+<Image src="/images/dino-1.png" alt="Dino" width={100} height={100} />
+```
+
+## Build Output
+
+`next.config.ts` uses `output: "standalone"` for Docker deployment. Do not remove this setting.
+
+## Not Used
+
+Do not add unless explicitly requested:
+- API routes (`app/api/`)
+- Server Actions
+- Middleware
+- Dynamic routes or `Link` navigation

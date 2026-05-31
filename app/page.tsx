@@ -1,7 +1,7 @@
-import SectionOne from "./_components/sections/section-one";
-import SectionTwo from "./_components/sections/section-two";
-import SectionThree from "./_components/sections/section-three";
-import SectionFour from "./_components/sections/section-four";
+import SectionFour from "@/app/_components/sections/section-four";
+import SectionOne from "@/app/_components/sections/section-one";
+import SectionThree from "@/app/_components/sections/section-three";
+import SectionTwo from "@/app/_components/sections/section-two";
 
 export default function Home() {
   return (

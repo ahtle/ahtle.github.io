@@ -5,9 +5,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
-import { useDecodeText } from "@/app/_hooks/use-decode-text";
-import RadarChart from "../chart/radar-chart";
-import styles from "../../page.module.css";
+import styles from "@/app/page.module.css";
+import RadarChart from "@/components/chart/radar-chart";
+import { useDecodeText } from "@/hooks/use-decode-text";
 
 const LABELS = ["Python / Django", "Databases", "AI / Cursor", "PHP", "JS/Vue"];
 const INITIAL_DATA = [0, 0, 0, 0, 0];

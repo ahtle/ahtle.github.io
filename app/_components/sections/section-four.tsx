@@ -2,21 +2,21 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 
-import styles from "../../page.module.css";
-import { useDecodeText } from "@/app/_hooks/use-decode-text";
+import styles from "@/app/page.module.css";
 import StageList, {
   type StageListItem,
 } from "@/app/_components/stage/stage-list";
-import SparkPng from "../../../public/images/spark.png";
-import SparkBwPng from "../../../public/images/spark-bw.png";
-import StanfordPng from "../../../public/images/stanford.png";
-import StanfordBwPng from "../../../public/images/stanford-bw.png";
-import BDPng from "../../../public/images/bd.png";
-import BDBwPng from "../../../public/images/bd-bw.png";
-import ThinkfulPng from "../../../public/images/thinkful.png";
-import ThinkfulBwPng from "../../../public/images/thinkful-bw.png";
-import SJSUPng from "../../../public/images/sjsu.png";
-import SJSUBwPng from "../../../public/images/sjsu-bw.png";
+import { useDecodeText } from "@/hooks/use-decode-text";
+import BDBwPng from "@/public/images/bd-bw.png";
+import BDPng from "@/public/images/bd.png";
+import SJSUBwPng from "@/public/images/sjsu-bw.png";
+import SJSUPng from "@/public/images/sjsu.png";
+import SparkBwPng from "@/public/images/spark-bw.png";
+import SparkPng from "@/public/images/spark.png";
+import StanfordBwPng from "@/public/images/stanford-bw.png";
+import StanfordPng from "@/public/images/stanford.png";
+import ThinkfulBwPng from "@/public/images/thinkful-bw.png";
+import ThinkfulPng from "@/public/images/thinkful.png";
 
 const HEADER_FINAL = "CHOOSE YOUR STAGE";
 
