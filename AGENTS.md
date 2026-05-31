@@ -107,6 +107,6 @@ When unsure: start colocated under the route's `_components/`. Move to root `com
 
 ## Links
 
-- [README.md](README.md) — getting started
+- [README.md](README.md) — getting started and [GitHub Pages](https://ahtle.github.io/) deployment
 - [README.Docker.md](README.Docker.md) — Docker deployment
 - `.cursor/rules/` — scoped Cursor rules for React, TypeScript, styling, Next.js
