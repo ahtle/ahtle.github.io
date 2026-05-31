@@ -1,0 +1,176 @@
+.projectBox {
+  border: 4px solid #000;
+  color: #fff;
+  margin-bottom: 80px;
+  background-color: #0200af;
+  box-shadow: 10px 10px 0 rgba(0, 0, 0, 0.75);
+}
+
+.projectNav {
+  display: flex;
+  background-color: #bbb;
+  list-style: none;
+  padding: 0 10px;
+  margin: 0;
+}
+
+.projectNav li {
+  color: #000;
+  margin-right: 15px;
+  cursor: pointer;
+}
+
+.projectNav li a {
+  color: #000;
+}
+
+.projectNav li:hover {
+  text-decoration: underline;
+}
+
+.showErrorModal {
+  opacity: 0.5;
+}
+
+.status {
+  margin: 0;
+  color: #ff6212;
+}
+
+.title {
+  font-size: 1.8em;
+  line-height: 50px;
+  padding: 0 15px;
+  margin: 0;
+}
+
+.description {
+  word-break: break-word;
+  text-align: left;
+  padding: 10px 15px;
+  background-color: #ff6212;
+}
+
+.tools {
+  display: flex;
+  align-items: center;
+  text-align: left;
+  padding: 10px 15px;
+}
+
+.toolIcon {
+  margin: 0 10px;
+  width: 24px;
+  height: 24px;
+  font-size: 24px;
+  flex-shrink: 0;
+}
+
+.toolIconReact {
+  color: #61dafb;
+}
+
+.toolIconVuejs {
+  color: #4fc08d;
+}
+
+.toolIconLaravel {
+  color: #ff2d20;
+}
+
+.toolIconWordpress {
+  color: #fff;
+}
+
+.toolIconDatabase {
+  color: #fff;
+}
+
+.additionalSkill {
+  margin: 0 10px;
+  height: 24px;
+  width: auto;
+  flex-shrink: 0;
+  object-fit: contain;
+}
+
+.colorRed {
+  color: red;
+}
+
+.modalMask {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
+}
+
+.modalContainer {
+  position: relative;
+  width: 280px;
+  height: 100px;
+  margin: 0 auto;
+  background-color: #a90201;
+  padding: 8px 4px;
+  box-shadow: 10px 10px 0 rgba(0, 0, 0, 0.75);
+}
+
+.errorHeading {
+  position: absolute;
+  top: 0;
+  color: #fcfc54;
+  border-left: 2px solid #fff;
+  border-right: 2px solid #fff;
+  padding-left: 4px;
+  padding-right: 4px;
+  width: 70px;
+  margin-left: -35px;
+  left: 50%;
+  background-color: #a90201;
+  font-size: 0.8em;
+}
+
+.errorBody {
+  display: flex;
+  border: 4px double #fff;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.errorBody p {
+  margin: 0;
+}
+
+@media screen and (max-width: 1450px) {
+  .title {
+    font-size: 1.5em;
+    line-height: 30px;
+  }
+}
+
+@media screen and (max-width: 1250px) {
+  .title {
+    font-size: 1.2em;
+    line-height: 30px;
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  .title {
+    font-size: 1.1em;
+    line-height: 30px;
+  }
+}
+
+@media screen and (max-width: 575px) {
+  .projectBox {
+    margin-bottom: 40px;
+  }
+}

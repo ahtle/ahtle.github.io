@@ -31,6 +31,42 @@
 .sectionFour {
   background: linear-gradient(180deg, #413561, #3206b9);
 }
+.sectionSix {
+  background: linear-gradient(180deg, #1a1514, #413561);
+}
+
+.projectContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 0 100px;
+  gap: 0 2rem;
+}
+
+.projectContainer > * {
+  flex: 1 1 100%;
+  max-width: 100%;
+}
+
+@media screen and (min-width: 768px) {
+  .projectContainer > * {
+    flex: 1 1 calc(50% - 1rem);
+    max-width: calc(50% - 1rem);
+  }
+}
+
+@media screen and (min-width: 992px) {
+  .projectContainer > * {
+    flex: 1 1 calc(33.333% - 1.34rem);
+    max-width: calc(33.333% - 1.34rem);
+  }
+}
+
+@media screen and (max-width: 575px) {
+  .projectContainer {
+    margin: 0;
+  }
+}
 
 .sectionFive {
   width: 100%;

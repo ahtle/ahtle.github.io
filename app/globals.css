@@ -34,7 +34,7 @@ body {
     @apply min-h-[18.75rem] p-8;
   }
   .section-header {
-    @apply mb-[4rem] text-[2rem] text-[#ff6212];
+    @apply mb-[4rem] text-[3rem] text-[#ff6212];
     text-shadow: 5px 5px #522e00;
   }
 }
