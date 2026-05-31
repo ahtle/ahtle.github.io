@@ -17,7 +17,7 @@ description: Add a new portfolio section to the single-page app. Use when the us
 
 ## Step 1: Create the component
 
-Create `app/_components/sections/section-five.tsx` (or next number).
+Create `app/_components/sections/section-five.tsx` (or next number) for the home route. For other routes, use `app/<route>/_components/`.
 
 Follow existing section patterns:
 - Server Component by default

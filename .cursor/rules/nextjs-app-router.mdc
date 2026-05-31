@@ -12,11 +12,12 @@ Next.js 16 has breaking changes. Read `node_modules/next/dist/docs/` before writ
 
 ## Structure
 
-- `app/` — routing, layouts, page-level CSS only
-- `app/page.tsx` — composes sections from `@/app/_components/`
-- `app/layout.tsx` — fonts (`next/font/google`), metadata, global CSS
-- `app/_components/` — page-specific UI (private folder, not routed)
-- Shared reusable UI → root `components/` (e.g. `chart/`)
+- `app/` — routing, layouts, route-level CSS; pages stay thin
+- `app/<route>/_components/` — UI for one route (home: `app/_components/`)
+- `components/` — shared UI reused across routes
+- `hooks/`, `lib/` — shared React hooks and pure TS utilities
+
+See `AGENTS.md` for placement rules.
 
 ## Server vs Client
 

@@ -37,10 +37,10 @@ Sections one and two are Server Components. Sections three and four are Client C
 
 ## Logic Extraction
 
-- Reusable React hooks → `hooks/` (named exports, e.g. `useDecodeText`)
-- Pure non-React logic → `lib/` (e.g. `decode-text.ts`)
-- Page/route UI → `app/_components/` (e.g. `sections/`, `stage/`)
-- Shared reusable UI → `components/` (e.g. `chart/RadarChart`)
+- Reusable React hooks → `hooks/`
+- Pure non-React logic → `lib/`
+- Page/route UI → `app/<route>/_components/` (home page: `app/_components/`)
+- Shared reusable UI → `components/`
 
 ## State
 

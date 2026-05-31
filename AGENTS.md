@@ -38,31 +38,37 @@ docker compose up --build  # Production check → http://localhost:8080
 
 Testing: **not configured**. Do not add Jest, Vitest, or Playwright without explicit approval.
 
-## Directory Map
-
-```
-app/
-├── layout.tsx              # Root layout, fonts, metadata
-├── page.tsx                # Home page — composes sections
-├── globals.css             # Tailwind import + global styles
-├── page.module.css         # Shared section/page CSS Modules
-└── _components/            # Page/route-specific UI (private folder)
-    ├── sections/           # section-one.tsx … section-four.tsx
-    └── stage/              # stage-list.tsx, stage-card.tsx
-
-components/                 # Shared UI (reusable across routes)
-└── chart/                  # radar-chart.tsx, radar-chart-options.ts
-
-hooks/                      # Shared React hooks
-└── use-decode-text.ts
-
-lib/                        # Pure TS, no React
-└── decode-text.ts
-
-public/images/              # Static assets (PNG, SVG)
-```
+## Project Structure
 
 Path alias: `@/*` → project root (see `tsconfig.json`).
+
+Use placement rules, not a fixed tree — the codebase evolves.
+
+### Where code lives
+
+**`app/`** — routing and page shells only (`layout.tsx`, `page.tsx`, route-level CSS). Pages compose components; keep them thin.
+
+**`app/<route>/_components/`** — UI used by one route/page. The `_` prefix makes it a private folder (not routed). For the home page at `/`, use `app/_components/`. For a future `/blog` route, use `app/blog/_components/`.
+
+**`components/`** — shared UI reused across routes (e.g. `RadarChart`). Promote here when a widget outgrows a single page.
+
+**`hooks/`** — shared React hooks (e.g. `useDecodeText`).
+
+**`lib/`** — pure TypeScript, no React (e.g. `decode-text.ts`).
+
+**`public/`** — static assets served as-is.
+
+### Placement decisions
+
+| If it is… | Put it in… |
+|-----------|------------|
+| Used by one route/page | `app/<route>/_components/` |
+| Reused across routes | `components/` |
+| React logic shared app-wide | `hooks/` |
+| Pure TS helper (no React) | `lib/` |
+| Route entry / layout | `app/<route>/page.tsx`, `layout.tsx` |
+
+When unsure: start colocated under the route's `_components/`. Move to root `components/`, `hooks/`, or `lib/` once reused elsewhere.
 
 ## Architecture
 
@@ -70,18 +76,6 @@ Path alias: `@/*` → project root (see `tsconfig.json`).
 - **Server vs client:** Default to Server Components. Add `"use client"` only for hooks, browser APIs, or client-only libraries (Chart.js, scroll listeners, interactive Font Awesome).
 - **State:** Local `useState` only. No Context, Redux, Zustand, SWR, or React Query.
 - **Data:** Content is hardcoded in components. No `fetch`, Server Actions, or API routes.
-- **Shared logic:** Reusable React hooks → `hooks/`. Pure functions → `lib/`.
-
-## Folder Placement
-
-| Scope | Location | Example |
-|-------|----------|---------|
-| Page/route-specific UI | `app/_components/` | `sections/`, `stage/` |
-| Shared UI (reusable) | `components/` | `RadarChart` |
-| Shared React hooks | `hooks/` | `useDecodeText` |
-| Pure TS utilities | `lib/` | `decode-text.ts` |
-| Future route-specific UI | `app/<route>/_components/` | blog-only widgets |
-| Page composition | `app/page.tsx` | imports from `@/app/_components/` |
 
 ## Conventions
 
@@ -99,7 +93,7 @@ Path alias: `@/*` → project root (see `tsconfig.json`).
 - Run `npm run lint` after substantive edits
 - Combine CSS Module classes with global Tailwind component classes (e.g. `` `${styles.sectionThree} section-container` ``)
 - Preserve `output: "standalone"` in `next.config.ts` for Docker deployment
-- Promote reusable UI to root `components/` when shared across routes; keep page-specific UI in `app/_components/`
+- Promote reusable UI to `components/` when shared across routes; keep page-specific UI in `app/<route>/_components/`
 
 ## Don't
 
