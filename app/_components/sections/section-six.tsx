@@ -4,12 +4,10 @@ import { useState } from "react";
 
 import ErrorModal from "@/app/_components/projects/error-modal";
 import ProjectCard from "@/app/_components/projects/project-card";
-import {
-  PROJECTS,
-  type ProjectImage,
-} from "@/app/_components/projects/project-constants";
+import { type ProjectImage } from "@/app/_components/projects/project-constants";
 import ProjectLightbox from "@/app/_components/projects/project-lightbox";
 import styles from "@/app/page.module.css";
+import { useGetProject } from "@/hooks/use-get-projects";
 
 import SectionHeader from "../section-header";
 
@@ -18,6 +16,7 @@ export default function SectionSix() {
   const [lightboxImages, setLightboxImages] = useState<ProjectImage[] | null>(
     null,
   );
+  const { projects } = useGetProject();
 
   return (
     <section
@@ -25,12 +24,13 @@ export default function SectionSix() {
       className={`${styles.sectionSix} section-container`}
     >
       <SectionHeader sectionId="section-six" text="PROJECTS" />
+
       <p className="mb-16 text-3xl text-white">
         Professional and personal Projects
       </p>
 
       <div className={styles.projectContainer}>
-        {PROJECTS.map((project) => (
+        {projects.map((project) => (
           <ProjectCard
             key={project.title}
             project={project}
