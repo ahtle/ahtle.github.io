@@ -1,28 +1,60 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useReducer } from "react";
 import { getProjects } from "@/apis/api";
 import { type Project } from "@/app/_components/projects/project-constants";
 
+type State = {
+  projects: Project[];
+  loading: boolean;
+  error: string | null;
+};
+
+type Action =
+  | { type: "loading" }
+  | { type: "success"; payload: Project[] }
+  | { type: "error"; payload: string };
+
+const reducer = (state: State, action: Action): State => {
+  switch (action.type) {
+    case "loading":
+      return { ...state, loading: true, error: null };
+
+    case "success":
+      return { projects: action.payload, loading: false, error: null };
+
+    case "error":
+      return { ...state, loading: false, error: action.payload };
+
+    default:
+      return state;
+  }
+};
+
 export const useGetProject = () => {
-  const [projects, setProjects] = useState<Project[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const [version, setVersion] = useState(0);
+  const [state, dispatch] = useReducer(reducer, {
+    projects: [],
+    loading: true,
+    error: null,
+  });
+
+  const fetchProjects = useCallback(async () => {
+    dispatch({ type: "loading" });
+    try {
+      const data = await getProjects();
+      dispatch({ type: "success", payload: data });
+    } catch (e) {
+      dispatch({
+        type: "error",
+        payload: e instanceof Error ? e.message : "Unknown error",
+      });
+    }
+  }, []);
 
   useEffect(() => {
-    const fetchProjects = async () => {
-      setLoading(true);
-      setError(null);
-      try {
-        setProjects(await getProjects());
-      } catch (e) {
-        setError(e instanceof Error ? e.message : "Unknown error");
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchProjects();
-  }, [version]);
+  }, [fetchProjects]);
 
-  return { projects, loading, error, refetch: () => setVersion((v) => v + 1) };
+  return {
+    ...state,
+    refetch: fetchProjects,
+  };
 };
