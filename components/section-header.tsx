@@ -36,8 +36,9 @@ export default function SectionHeader({
       }
     };
 
-    document.addEventListener("scroll", onScroll);
-    return () => document.removeEventListener("scroll", onScroll);
+    onScroll();
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
   }, [sectionId, triggerSection]);
 
   return <h3 className="section-header">{header}</h3>;

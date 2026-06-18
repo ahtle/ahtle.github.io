@@ -9,7 +9,7 @@ import ProjectLightbox from "@/app/_components/projects/project-lightbox";
 import styles from "@/app/page.module.css";
 import { useGetProject } from "@/hooks/use-get-projects";
 
-import SectionHeader from "../section-header";
+import SectionHeader from "../../../components/section-header";
 
 export default function SectionSix() {
   const [showErrorModal, setShowErrorModal] = useState(false);

@@ -7,7 +7,7 @@ import { useCallback, useMemo, useState } from "react";
 
 import styles from "@/app/page.module.css";
 import RadarChart from "@/components/chart/radar-chart";
-import SectionHeader from "../section-header";
+import SectionHeader from "../../../components/section-header";
 
 const LABELS = ["Python / Django", "Databases", "AI / Cursor", "PHP", "JS/Vue"];
 const INITIAL_DATA = [0, 0, 0, 0, 0];

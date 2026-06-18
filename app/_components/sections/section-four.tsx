@@ -11,7 +11,7 @@ import {
 } from "@/app/_components/stage/stage-constants";
 import StageDisplay from "@/app/_components/stage/stage-display";
 import StageList from "@/app/_components/stage/stage-list";
-import SectionHeader from "../section-header";
+import SectionHeader from "../../../components/section-header";
 
 const HEADER_FINAL = "CHOOSE YOUR STAGE";
 
