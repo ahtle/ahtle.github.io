@@ -1,8 +1,9 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { useCallback, useEffect, useRef } from "react";
+import { useCallback, useLayoutEffect, useRef } from "react";
 import { useDecodeText } from "@/hooks/use-decode-text";
+import { useHistoryVersion } from "@/hooks/use-history-version";
 
 interface SectionHeaderProps {
   sectionId: string;
@@ -22,6 +23,7 @@ export default function SectionHeader({
   decodeOnMount = false,
 }: SectionHeaderProps) {
   const pathname = usePathname();
+  const historyVersion = useHistoryVersion();
   const { text: header, startDecode } = useDecodeText(text);
   const hasTriggeredRef = useRef(false);
 
@@ -32,19 +34,12 @@ export default function SectionHeader({
     onTriggered?.();
   }, [startDecode, onTriggered]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     hasTriggeredRef.current = false;
 
     if (decodeOnMount) {
       triggerSection();
-
-      const onPopState = (): void => {
-        hasTriggeredRef.current = false;
-        triggerSection();
-      };
-
-      window.addEventListener("popstate", onPopState);
-      return () => window.removeEventListener("popstate", onPopState);
+      return;
     }
 
     const checkVisibility = (): void => {
@@ -80,7 +75,14 @@ export default function SectionHeader({
       observer?.disconnect();
       window.removeEventListener("scroll", checkVisibility);
     };
-  }, [sectionId, triggerSection, text, pathname, decodeOnMount]);
+  }, [
+    sectionId,
+    triggerSection,
+    text,
+    pathname,
+    historyVersion,
+    decodeOnMount,
+  ]);
 
   return <h3 className="section-header">{header}</h3>;
 }

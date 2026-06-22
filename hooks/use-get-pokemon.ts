@@ -1,7 +1,8 @@
 import { PokemonListResponse, getPokemonList } from "@/apis/pokemon";
+import { useHistoryVersion } from "@/hooks/use-history-version";
 import axios from "axios";
 import { usePathname } from "next/navigation";
-import { useCallback, useEffect, useReducer, useState } from "react";
+import { useCallback, useLayoutEffect, useReducer } from "react";
 
 type State = {
   pokemons: PokemonListResponse | null;
@@ -29,7 +30,7 @@ const reducer = (state: State, action: Action): State => {
 
 export const useGetPokemon = () => {
   const pathname = usePathname();
-  const [historyVersion, setHistoryVersion] = useState(0);
+  const historyVersion = useHistoryVersion();
   const [state, dispatch] = useReducer(reducer, {
     pokemons: null,
     loading: true,
@@ -50,13 +51,7 @@ export const useGetPokemon = () => {
     }
   }, []);
 
-  useEffect(() => {
-    const onPopState = () => setHistoryVersion((version) => version + 1);
-    window.addEventListener("popstate", onPopState);
-    return () => window.removeEventListener("popstate", onPopState);
-  }, []);
-
-  useEffect(() => {
+  useLayoutEffect(() => {
     const controller = new AbortController();
     fetchPokemon(controller.signal);
     return () => controller.abort();
@@ -64,7 +59,6 @@ export const useGetPokemon = () => {
 
   return {
     ...state,
-    historyVersion,
     refetch: () => fetchPokemon(),
   };
 };
