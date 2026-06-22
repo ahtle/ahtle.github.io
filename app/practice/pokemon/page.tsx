@@ -5,11 +5,16 @@ import { useGetPokemon } from "@/hooks/use-get-pokemon";
 import PokemonListCard from "./PokemonListCard";
 
 export default function PokemonPage() {
-  const { pokemons, loading, error } = useGetPokemon();
+  const { pokemons, loading, error, historyVersion } = useGetPokemon();
 
   return (
     <div id="pokemon">
-      <SectionHeader sectionId="pokemon" text="Pokemon" />
+      <SectionHeader
+        key={`pokemon-${historyVersion}`}
+        sectionId="pokemon"
+        text="Pokemon"
+        decodeOnMount
+      />
       <div>
         {error && <p>error</p>}
         {loading && <p>loading</p>}

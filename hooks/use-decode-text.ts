@@ -23,18 +23,14 @@ export function useDecodeText(
   const [text, setText] = useState(
     () => initialText ?? deterministicScrambleText(finalText),
   );
-  const isDecodingRef = useRef(false);
   const cancelAnimationRef = useRef<(() => void) | null>(null);
 
   const startDecode = useCallback(() => {
-    if (isDecodingRef.current) return;
-    isDecodingRef.current = true;
     cancelAnimationRef.current?.();
     setText(deterministicScrambleText(finalText));
 
     cancelAnimationRef.current = runDecodeAnimation(finalText, setText, {
       onComplete: () => {
-        isDecodingRef.current = false;
         cancelAnimationRef.current = null;
       },
     });

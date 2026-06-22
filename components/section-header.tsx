@@ -3,23 +3,25 @@
 import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useRef } from "react";
 import { useDecodeText } from "@/hooks/use-decode-text";
-import { useNavigationKey } from "@/hooks/use-navigation-key";
 
 interface SectionHeaderProps {
   sectionId: string;
   text: string;
   onTriggered?: () => void;
+  /** Decode immediately on mount instead of waiting for scroll visibility. */
+  decodeOnMount?: boolean;
 }
 
 const VISIBILITY_ROOT_MARGIN = "800px 0px 0px 0px";
+const VISIBILITY_TOP_OFFSET = 800;
 
 export default function SectionHeader({
   sectionId,
   text,
   onTriggered,
+  decodeOnMount = false,
 }: SectionHeaderProps) {
   const pathname = usePathname();
-  const navigationKey = useNavigationKey();
   const { text: header, startDecode } = useDecodeText(text);
   const hasTriggeredRef = useRef(false);
 
@@ -27,49 +29,58 @@ export default function SectionHeader({
     if (hasTriggeredRef.current) return;
     hasTriggeredRef.current = true;
     startDecode();
-    if (onTriggered) {
-      onTriggered();
-    }
+    onTriggered?.();
   }, [startDecode, onTriggered]);
 
   useEffect(() => {
     hasTriggeredRef.current = false;
-  }, [text, pathname, navigationKey]);
 
-  useEffect(() => {
-    let observer: IntersectionObserver | null = null;
-    let rafId = 0;
+    if (decodeOnMount) {
+      triggerSection();
 
-    const observe = (): void => {
+      const onPopState = (): void => {
+        hasTriggeredRef.current = false;
+        triggerSection();
+      };
+
+      window.addEventListener("popstate", onPopState);
+      return () => window.removeEventListener("popstate", onPopState);
+    }
+
+    const checkVisibility = (): void => {
       const element = document.getElementById(sectionId);
-      if (!element) {
-        rafId = requestAnimationFrame(observe);
-        return;
-      }
-
-      observer = new IntersectionObserver(
-        ([entry]) => {
-          if (entry?.isIntersecting && !hasTriggeredRef.current) {
-            triggerSection();
-          }
-        },
-        { rootMargin: VISIBILITY_ROOT_MARGIN, threshold: 0 },
-      );
-      observer.observe(element);
-
+      if (!element || hasTriggeredRef.current) return;
       const rect = element.getBoundingClientRect();
-      if (rect.top <= 800 && !hasTriggeredRef.current) {
+      if (rect.top <= VISIBILITY_TOP_OFFSET) {
         triggerSection();
       }
     };
 
-    observe();
+    checkVisibility();
+
+    const element = document.getElementById(sectionId);
+    const observer = element
+      ? new IntersectionObserver(
+          ([entry]) => {
+            if (entry?.isIntersecting) {
+              triggerSection();
+            }
+          },
+          { rootMargin: VISIBILITY_ROOT_MARGIN, threshold: 0 },
+        )
+      : null;
+
+    if (element && observer) {
+      observer.observe(element);
+    }
+
+    window.addEventListener("scroll", checkVisibility, { passive: true });
 
     return () => {
-      cancelAnimationFrame(rafId);
       observer?.disconnect();
+      window.removeEventListener("scroll", checkVisibility);
     };
-  }, [sectionId, triggerSection, text, pathname, navigationKey]);
+  }, [sectionId, triggerSection, text, pathname, decodeOnMount]);
 
   return <h3 className="section-header">{header}</h3>;
 }

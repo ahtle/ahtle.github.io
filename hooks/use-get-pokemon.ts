@@ -1,8 +1,7 @@
 import { PokemonListResponse, getPokemonList } from "@/apis/pokemon";
-import { useNavigationKey } from "@/hooks/use-navigation-key";
 import axios from "axios";
 import { usePathname } from "next/navigation";
-import { useCallback, useEffect, useReducer } from "react";
+import { useCallback, useEffect, useReducer, useState } from "react";
 
 type State = {
   pokemons: PokemonListResponse | null;
@@ -30,7 +29,7 @@ const reducer = (state: State, action: Action): State => {
 
 export const useGetPokemon = () => {
   const pathname = usePathname();
-  const navigationKey = useNavigationKey();
+  const [historyVersion, setHistoryVersion] = useState(0);
   const [state, dispatch] = useReducer(reducer, {
     pokemons: null,
     loading: true,
@@ -52,13 +51,20 @@ export const useGetPokemon = () => {
   }, []);
 
   useEffect(() => {
+    const onPopState = () => setHistoryVersion((version) => version + 1);
+    window.addEventListener("popstate", onPopState);
+    return () => window.removeEventListener("popstate", onPopState);
+  }, []);
+
+  useEffect(() => {
     const controller = new AbortController();
     fetchPokemon(controller.signal);
     return () => controller.abort();
-  }, [fetchPokemon, navigationKey, pathname]);
+  }, [fetchPokemon, pathname, historyVersion]);
 
   return {
     ...state,
+    historyVersion,
     refetch: () => fetchPokemon(),
   };
 };
