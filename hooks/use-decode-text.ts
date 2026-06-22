@@ -30,6 +30,7 @@ export function useDecodeText(
     if (isDecodingRef.current) return;
     isDecodingRef.current = true;
     cancelAnimationRef.current?.();
+    setText(deterministicScrambleText(finalText));
 
     cancelAnimationRef.current = runDecodeAnimation(finalText, setText, {
       onComplete: () => {

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { VT323 } from "next/font/google";
+import { NavigationKeyTracker } from "@/hooks/use-navigation-key";
 import "./globals.css";
 
 const vt323 = VT323({
@@ -22,6 +23,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${vt323.variable} h-full antialiased`}>
       <body className={`${vt323.className} flex min-h-full flex-col`}>
+        <NavigationKeyTracker />
         {children}
       </body>
     </html>

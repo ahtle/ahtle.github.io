@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const POKEAPI_BASE = "https://pokeapi.co/api/v2/";
+const POKEAPI_BASE = "https://pokeapi.co/api/v2";
 
 export interface PokemonListItem {
   name: string;

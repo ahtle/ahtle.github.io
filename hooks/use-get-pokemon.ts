@@ -1,8 +1,8 @@
+import { PokemonListResponse, getPokemonList } from "@/apis/pokemon";
+import { useNavigationKey } from "@/hooks/use-navigation-key";
+import axios from "axios";
+import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useReducer } from "react";
-import {
-  PokemonListResponse,
-  getPokemonList,
-} from "@/app/practice/pokemon/pokemon";
 
 type State = {
   pokemons: PokemonListResponse | null;
@@ -29,19 +29,21 @@ const reducer = (state: State, action: Action): State => {
 };
 
 export const useGetPokemon = () => {
+  const pathname = usePathname();
+  const navigationKey = useNavigationKey();
   const [state, dispatch] = useReducer(reducer, {
     pokemons: null,
     loading: true,
     error: null,
   });
 
-  const fetchPokemon = useCallback(async () => {
+  const fetchPokemon = useCallback(async (signal?: AbortSignal) => {
     dispatch({ type: "loading" });
     try {
-      const data = await getPokemonList();
-      console.log(data);
+      const data = await getPokemonList(signal);
       dispatch({ type: "success", payload: data });
     } catch (e) {
+      if (signal?.aborted || axios.isCancel(e)) return;
       dispatch({
         type: "error",
         payload: e instanceof Error ? e.message : "Unknown error",
@@ -50,11 +52,13 @@ export const useGetPokemon = () => {
   }, []);
 
   useEffect(() => {
-    fetchPokemon();
-  }, [fetchPokemon]);
+    const controller = new AbortController();
+    fetchPokemon(controller.signal);
+    return () => controller.abort();
+  }, [fetchPokemon, navigationKey, pathname]);
 
   return {
     ...state,
-    refetch: fetchPokemon,
+    refetch: () => fetchPokemon(),
   };
 };

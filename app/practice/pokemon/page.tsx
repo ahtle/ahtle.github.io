@@ -2,9 +2,10 @@
 
 import SectionHeader from "@/components/section-header";
 import { useGetPokemon } from "@/hooks/use-get-pokemon";
+import PokemonListCard from "./PokemonListCard";
 
 export default function PokemonPage() {
-  const { pokemons, loading, error, refetch } = useGetPokemon();
+  const { pokemons, loading, error } = useGetPokemon();
 
   return (
     <div id="pokemon">
@@ -12,7 +13,9 @@ export default function PokemonPage() {
       <div>
         {error && <p>error</p>}
         {loading && <p>loading</p>}
-        {pokemons?.results.length && pokemons.count}
+        {pokemons?.results.map((p) => (
+          <PokemonListCard key={p.name} pokemon={p} />
+        ))}
       </div>
     </div>
   );
