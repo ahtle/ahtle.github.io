@@ -17,6 +17,10 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      # Used by `next.config.ts` to switch to `output: "export"` for GitHub Pages.
+      # Set via repository Actions variable STATIC_EXPORT (GitHub blocks GITHUB_ prefix).
+      STATIC_EXPORT: ${{ vars.STATIC_EXPORT || 'true' }}
     steps:
       - uses: actions/checkout@v4
 
