@@ -15,13 +15,7 @@ export default async function PokemonDetailsPage({
 
   return (
     <div id="pokemon-detail">
-      {name && (
-        <SectionHeader
-          sectionId="pokemon-detail"
-          text={name}
-          decodeOnMount
-        />
-      )}
+      {name && <SectionHeader sectionId="pokemon-detail" text={name} />}
     </div>
   );
 }

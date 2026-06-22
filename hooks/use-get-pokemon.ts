@@ -1,5 +1,4 @@
 import { PokemonListResponse, getPokemonList } from "@/apis/pokemon";
-import { useHistoryVersion } from "@/hooks/use-history-version";
 import axios from "axios";
 import { usePathname } from "next/navigation";
 import { useCallback, useLayoutEffect, useReducer } from "react";
@@ -30,7 +29,6 @@ const reducer = (state: State, action: Action): State => {
 
 export const useGetPokemon = () => {
   const pathname = usePathname();
-  const historyVersion = useHistoryVersion();
   const [state, dispatch] = useReducer(reducer, {
     pokemons: null,
     loading: true,
@@ -55,7 +53,7 @@ export const useGetPokemon = () => {
     const controller = new AbortController();
     fetchPokemon(controller.signal);
     return () => controller.abort();
-  }, [fetchPokemon, pathname, historyVersion]);
+  }, [fetchPokemon, pathname]);
 
   return {
     ...state,

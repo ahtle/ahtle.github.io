@@ -9,11 +9,7 @@ export default function PokemonPage() {
 
   return (
     <div id="pokemon">
-      <SectionHeader
-        sectionId="pokemon"
-        text="Pokemon"
-        decodeOnMount
-      />
+      <SectionHeader sectionId="pokemon" text="Pokemon" />
       <div>
         {error && <p>error</p>}
         {loading && <p>loading</p>}
