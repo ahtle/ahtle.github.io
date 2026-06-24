@@ -38,7 +38,7 @@ export const useGetPokemon = () => {
   const fetchPokemon = useCallback(async (signal?: AbortSignal) => {
     dispatch({ type: "loading" });
     try {
-      const data = await getPokemonList(signal);
+      const data = await getPokemonList({ signal });
       dispatch({ type: "success", payload: data });
     } catch (e) {
       if (signal?.aborted || axios.isCancel(e)) return;
