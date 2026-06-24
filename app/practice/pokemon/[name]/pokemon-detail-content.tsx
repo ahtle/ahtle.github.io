@@ -16,7 +16,13 @@ export default function PokemonDetailContent({
       <SectionHeader sectionId="pokemon-detail" text={pokemon.name} />
       <div className="flex justify-center">
         {sprite ? (
-          <Image src={sprite} alt={pokemon.name} width={100} height={100} />
+          <Image
+            src={sprite}
+            alt={pokemon.name}
+            width={100}
+            height={100}
+            loading="eager"
+          />
         ) : (
           <p>No image available for {pokemon.name}</p>
         )}

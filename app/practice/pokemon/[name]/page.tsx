@@ -11,11 +11,25 @@ export async function generateStaticParams() {
   return results.map((pokemon) => ({ name: pokemon.name }));
 }
 
+export async function generateMetadata({ params }: PokemonDetailsPageProps) {
+  const { name } = await params;
+  return {
+    title: `Pokemon - ${name}`,
+    description: `Information about ${name}`,
+    openGraph: {
+      title: `${name} - Pokemon`,
+      description: `Information about ${name}`,
+    },
+  };
+}
+
+interface PokemonDetailsPageProps {
+  params: Promise<{ name: string }>;
+}
+
 export default async function PokemonDetailsPage({
   params,
-}: {
-  params: Promise<{ name: string }>;
-}) {
+}: PokemonDetailsPageProps) {
   const { name } = await params;
 
   let pokemon;
