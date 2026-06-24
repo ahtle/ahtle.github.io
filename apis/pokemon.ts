@@ -19,6 +19,11 @@ export interface PokemonDetail {
   sprites: {
     front_default: string | null;
   };
+  moves: {
+    move: {
+      name: string;
+    };
+  }[];
 }
 
 export class PokemonNotFoundError extends Error {
@@ -41,16 +46,24 @@ export class PokemonFetchError extends Error {
   }
 }
 
-export const getPokemonList = async (
-  signal?: AbortSignal,
-): Promise<PokemonListResponse> => {
+export async function getPokemonList({
+  signal,
+  limit,
+}: {
+  signal?: AbortSignal;
+  limit?: number;
+} = {}): Promise<PokemonListResponse> {
   try {
-    const res = await axios.get(`${POKEAPI_BASE}/pokemon/`, { signal });
+    let url = `${POKEAPI_BASE}/pokemon/`;
+    if (typeof limit === "number" && Number.isFinite(limit)) {
+      url += `?limit=${limit}`;
+    }
+    const res = await axios.get(url, { signal });
     return res.data as PokemonListResponse;
   } catch (e) {
     throw new PokemonFetchError(`Failed to fetch Pokemon list`, e);
   }
-};
+}
 
 export const getPokemonDetail = async (
   name: string,
@@ -62,9 +75,12 @@ export const getPokemonDetail = async (
   }
 
   try {
-    const res = await axios.get(`${POKEAPI_BASE}/pokemon/${encodeURIComponent(trimmedName)}`, {
-      signal,
-    });
+    const res = await axios.get(
+      `${POKEAPI_BASE}/pokemon/${encodeURIComponent(trimmedName)}`,
+      {
+        signal,
+      },
+    );
     return res.data as PokemonDetail;
   } catch (e) {
     if (axios.isAxiosError(e) && e.response?.status === 404) {

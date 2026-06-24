@@ -1,18 +1,18 @@
 "use client";
 
 import SectionHeader from "@/components/section-header";
-import { useGetPokemon } from "@/hooks/use-get-pokemon";
-import PokemonListCard from "./PokemonListCard";
+import { usePokemonList } from "@/hooks/use-pokemon-tanstack";
+import PokemonListCard from "./pokemon-list-card";
 
 export default function PokemonPage() {
-  const { pokemons, loading, error } = useGetPokemon();
+  const { data: pokemons, isPending, isError, error } = usePokemonList();
 
   return (
     <div id="pokemon">
       <SectionHeader sectionId="pokemon" text="Pokemon" />
       <div>
-        {error && <p>error</p>}
-        {loading && <p>loading</p>}
+        {isError && <p>{error.message}</p>}
+        {isPending && <p>loading</p>}
         {pokemons?.results.map((p) => (
           <PokemonListCard key={p.name} pokemon={p} />
         ))}
